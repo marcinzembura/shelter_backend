@@ -9,5 +9,6 @@ import java.util.List;
 public interface MedicalCardRepository extends CrudRepository<MedicalCard, Integer> {
 
     List<MedicalCard>findMedicalCardByAnimal_Name(String name);
+    List<MedicalCard>findMedicalCardById(Integer id);
 
 }

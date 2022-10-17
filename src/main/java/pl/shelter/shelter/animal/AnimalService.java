@@ -19,13 +19,16 @@ public class AnimalService {
     public List<Animal> findAnimalById(Integer id) {
         return animalRepository.findAnimalById(id);
     }
+
     public Iterable<Animal> findAllAnimals() {
         return animalRepository.findAll();
     }
-    public Animal saveAnimal(Animal animal){
+
+    public Animal saveAnimal(Animal animal) {
         return animalRepository.save(animal);
     }
-    public void deleteAnimalById(Integer id){
+
+    public void deleteAnimalById(Integer id) {
         animalRepository.deleteById(id);
     }
 

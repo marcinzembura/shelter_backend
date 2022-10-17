@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import pl.shelter.shelter.animal.Animal;
 import pl.shelter.shelter.animal.AnimalRepository;
 import pl.shelter.shelter.meal.Meal;
+
+import java.util.List;
 
 @Service
 public class MedicalCardService {
@@ -18,6 +21,20 @@ public class MedicalCardService {
         this.animalRepository=animalRepository;
     }
 
+    public List<MedicalCard> findMedicalCardById(Integer id) {
+        return medicalCardRepository.findMedicalCardById(id);
+    }
+    public Iterable<MedicalCard> findAllMedicalCards() {
+        return medicalCardRepository.findAll();
+    }
+
+    public MedicalCard saveMedicalCard(MedicalCard medicalCard) {
+        return medicalCardRepository.save(medicalCard);
+    }
+
+    public void deleteMedicalCardById(Integer id) {
+        medicalCardRepository.deleteById(id);
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void saveRecord() {
