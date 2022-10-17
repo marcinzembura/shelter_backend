@@ -9,4 +9,6 @@ import java.util.List;
 public interface MealRepository extends CrudRepository<Meal,Integer> {
 
     List<Meal>findMealsByAnimal_Name(String name);
+
+    List<Meal>findMealsByAnimal_Id(Integer id);
 }

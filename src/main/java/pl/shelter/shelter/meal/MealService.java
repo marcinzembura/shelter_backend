@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import pl.shelter.shelter.animal.Animal;
 import pl.shelter.shelter.animal.AnimalRepository;
+
+import java.util.List;
 
 @Service
 public class MealService {
@@ -17,6 +20,21 @@ public class MealService {
         this.mealRepository = mealRepository;
         this.animalRepository=animalRepository;
     }
+
+    public List<Meal> findMealByAnimalId(Integer id) {
+        return mealRepository.findMealsByAnimal_Id(id);
+    }
+    public Iterable<Meal> findAllMeals() {
+        return mealRepository.findAll();
+    }
+
+    public Meal saveMeal(Meal meal){
+        return mealRepository.save(meal);
+    }
+    public void deleteMealById(Integer id){
+        mealRepository.deleteById(id);
+    }
+
 
     @EventListener(ApplicationReadyEvent.class)
     public void saveRecord() {

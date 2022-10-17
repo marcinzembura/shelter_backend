@@ -13,8 +13,8 @@ public class AnimalApi {
     private AnimalService animalService;
 
     @Autowired
-    public AnimalApi(AnimalService videoCassettes) {
-        this.animalService = videoCassettes;
+    public AnimalApi(AnimalService animalService) {
+        this.animalService = animalService;
     }
 
     @GetMapping("/all")
