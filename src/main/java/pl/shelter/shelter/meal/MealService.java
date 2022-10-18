@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import pl.shelter.shelter.animal.Animal;
 import pl.shelter.shelter.animal.AnimalRepository;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public class MealService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void saveRecord() {
-//        Meal meal1 = new Meal("lamb", 300, "13.10.2022",animalRepository.findAnimalByName("Puma").get(3));
+//        Meal meal1 = new Meal("lamb", 300, "13.10.2022",animalRepository.findAnimalByName("Puma").get(0));
 //        mealRepository.save(meal1);
 //        Iterable<Meal> meals = mealRepository.findMealsByAnimal_Name("Puma");
 //        meals.forEach(System.out::println);

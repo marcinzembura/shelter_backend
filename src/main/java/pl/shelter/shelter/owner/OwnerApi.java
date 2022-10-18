@@ -3,7 +3,6 @@ package pl.shelter.shelter.owner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.shelter.shelter.animal.Animal;
 
 import java.util.Optional;
 

@@ -1,13 +1,10 @@
 package pl.shelter.shelter.medicalCard;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.shelter.shelter.animal.Animal;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 @Table(name = "medical_card")

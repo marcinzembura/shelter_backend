@@ -1,8 +1,6 @@
 package pl.shelter.shelter.owner;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.shelter.shelter.animal.Animal;
 

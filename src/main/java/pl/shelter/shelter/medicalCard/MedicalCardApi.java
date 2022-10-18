@@ -2,8 +2,6 @@ package pl.shelter.shelter.medicalCard;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.shelter.shelter.animal.Animal;
-import pl.shelter.shelter.animal.AnimalService;
 
 import java.util.List;
 
