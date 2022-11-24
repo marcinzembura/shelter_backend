@@ -32,5 +32,7 @@ public class SignupRequest {
     @NotBlank
     private String surname;
     private Long phone_number;
+//    private boolean isAdmin;
+//    private boolean isEmployee;
 
 }

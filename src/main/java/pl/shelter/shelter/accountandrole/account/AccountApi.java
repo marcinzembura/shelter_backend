@@ -7,6 +7,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/account")
+@CrossOrigin
 public class AccountApi {
 
     private AccountService accountService;
@@ -23,6 +24,12 @@ public class AccountApi {
     public Iterable<Account> getAllAccounts() {
         return accountService.findAllAccounts();
     }
+
+//    @GetMapping("/all1")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+//    public Iterable<Account> getAllAccounts1() {
+////        return accountService.findAllAccounts();
+//    }
 
     @GetMapping
     public Optional<Account> getAccountById(@RequestParam Integer id) {

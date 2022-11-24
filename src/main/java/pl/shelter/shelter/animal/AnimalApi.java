@@ -24,8 +24,28 @@ public class AnimalApi {
         return animalService.findAllAnimals();
     }
 
+    @GetMapping("/all/active")
+    public Iterable<Animal> getActiveAnimals() {
+        return animalService.findActiveAnimals();
+    }
+
+    @GetMapping("/last")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Iterable<Animal> getLastAnimals() {
+        return animalService.findLastAnimals();
+    }
+
+    @GetMapping("/active")
+    public Integer findNumberOfActiveAnimals(){return animalService.findNumberOfActiveAnimals();}
+
+    @GetMapping("/adopted")
+    public Integer findNumberOfAdoptedAnimals(){return animalService.findNumberOfAdoptedAnimals();}
+
+    @GetMapping("/type")
+    public Integer findNumberOfTypeAnimals(){return animalService.findNumberOfTypeAnimals();}
+
     @GetMapping
-    public List<Animal> getById(@RequestParam Integer id) {
+    public Animal getById(@RequestParam Integer id) {
         return animalService.findAnimalById(id);
     }
 

@@ -28,6 +28,7 @@ public class OwnerService {
     }
 
     public Owner saveOwner(Owner owner) {
+        animalRepository.findAnimalById(owner.getAnimal().getId()).setStatus(false);
         return ownerRepository.save(owner);
     }
 
@@ -37,7 +38,8 @@ public class OwnerService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void getAllRecords() {
-//        Owner owner1 = new Owner("Alex","Cabezass", "510505121", "alexcabezzas@gmail.com","51050512111","Krakow",animalRepository.findAnimalByName("Paco").get(0));
+//        Owner owner1 = new Owner("Piotrus","Zuchowicz", "767821212", "piotruszuchowicz@gmail.com","12312332112","Krakow",animalRepository.findAnimalByName(id);
+
 //        ownerRepository.save(owner1);
 //        Iterable<Owner> owners =  ownerRepository.findAll();
 //        owners.forEach(System.out::println);

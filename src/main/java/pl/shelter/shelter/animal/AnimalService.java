@@ -16,13 +16,27 @@ public class AnimalService {
         this.animalRepository = repository;
     }
 
-    public List<Animal> findAnimalById(Integer id) {
+    public Animal findAnimalById(Integer id) {
         return animalRepository.findAnimalById(id);
     }
 
     public Iterable<Animal> findAllAnimals() {
         return animalRepository.findAll();
     }
+
+    public Iterable<Animal> findActiveAnimals() {
+        return animalRepository.getActiveAnimals();
+    }
+
+    public Iterable<Animal> findLastAnimals() {
+        return animalRepository.getLastFiveActiveAnimals();
+    }
+
+    public Integer findNumberOfActiveAnimals(){return animalRepository.getNumberOfActiveAnimals();}
+
+    public Integer findNumberOfAdoptedAnimals(){return animalRepository.getNumberOfAdoptedAnimals();}
+
+    public Integer findNumberOfTypeAnimals(){return animalRepository.getNumberOfTypeAnimals();}
 
     public Animal saveAnimal(Animal animal) {
         return animalRepository.save(animal);
@@ -32,8 +46,10 @@ public class AnimalService {
         animalRepository.deleteById(id);
     }
 
+
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
+
 /*        animalRepository.save(new Animal("Puma", "Dog", 8, 10, false, "1", "1"));
         animalRepository.save(new Animal("Sonar", "Dog", 7, 10, false, "1", "1"));
         animalRepository.save(new Animal("Paco", "Dog", 4, 15, true, "1", "1"));
