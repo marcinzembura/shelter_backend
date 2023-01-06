@@ -2,6 +2,7 @@ package pl.shelter.shelter.owner;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @CrossOrigin
 public class OwnerApi {
 
+
     private OwnerService ownerService;
 
     @Autowired
@@ -19,27 +21,34 @@ public class OwnerApi {
     }
 
     @GetMapping("/all")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Iterable<Owner> getAll() {
         return ownerService.findAllOwners();
     }
 
     @GetMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Optional<Owner> getById(@RequestParam Integer id) {
         return ownerService.findOwnersById(id);
     }
 
+
     @PostMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Owner addOwner(@RequestBody Owner owner) {
         return ownerService.saveOwner(owner);
     }
 
     @PutMapping
-    public Owner updateOwner(@RequestBody Owner owner) {
-        return ownerService.saveOwner(owner);
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
+    public Owner updateOwner(@RequestBody Owner newOwner) {
+        return ownerService.updateOwner(newOwner);
     }
 
-    @DeleteMapping
-    public void deleteOwner(@RequestParam Integer id) {
+    @DeleteMapping(value="/{id}")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
+    public void deleteOwner(@PathVariable Integer id) {
         ownerService.deleteOwnerById(id);
     }
 

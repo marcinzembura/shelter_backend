@@ -1,4 +1,5 @@
 package pl.shelter.shelter.accountandrole.account;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +19,21 @@ public class AccountApi {
     }
 
 
-
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Iterable<Account> getAllAccounts() {
         return accountService.findAllAccounts();
     }
 
-//    @GetMapping("/all1")
+    //    @GetMapping("/all1")
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
 //    public Iterable<Account> getAllAccounts1() {
 ////        return accountService.findAllAccounts();
+//    }
+//    @GetMapping("/all")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    public Iterable<Account> getAllEmployeeAccounts() {
+//        return accountService.;
 //    }
 
     @GetMapping
@@ -37,17 +42,20 @@ public class AccountApi {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Account addAccount(@RequestBody Account account) {
         return accountService.saveAccount(account);
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Account updateAccount(@RequestBody Account account) {
         return accountService.updateAccount(account);
     }
 
-    @DeleteMapping
-    public void deleteAccount(@RequestParam Integer id) {
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteAccount(@PathVariable Integer id) {
         accountService.deleteAccountById(id);
     }
 

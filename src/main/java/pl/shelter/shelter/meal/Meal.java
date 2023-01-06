@@ -16,15 +16,15 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Integer weight;
+    private String description;
     private String date;
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_animal", referencedColumnName = "id")
     private Animal animal;
 
-    public Meal(String name, Integer weight, String date, Animal animal) {
+    public Meal(String name,String description, String date, Animal animal) {
         this.name = name;
-        this.weight = weight;
+        this.description=description;
         this.date = date;
         this.animal=animal;
     }
@@ -35,11 +35,10 @@ public class Meal {
     @Override
     public String toString() {
         return "Meal{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", weight=" + weight +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", date='" + date + '\'' +
-                ", animal_id=" + animal.getId() +
+                ", animal=" + animal +
                 '}';
     }
 }

@@ -28,8 +28,27 @@ public class OwnerService {
     }
 
     public Owner saveOwner(Owner owner) {
+        System.out.println(owner);
         animalRepository.findAnimalById(owner.getAnimal().getId()).setStatus(false);
         return ownerRepository.save(owner);
+    }
+
+    public Owner updateOwner(Owner newOwner) {
+
+        System.out.println(newOwner);
+        try {
+            Optional<Object> updatedOwner = findOwnersById(newOwner.getId())
+                    .map(owner -> {
+                        owner.setPhoneNumber(newOwner.getPhoneNumber());
+                        owner.setEmail(newOwner.getEmail());
+                        owner.setAddress(newOwner.getAddress());
+                        owner.setAnimal(animalRepository.findAnimalById(newOwner.getId()));
+                        return ownerRepository.save(owner);
+                    });
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return newOwner;
     }
 
     public void deleteOwnerById(Integer id) {

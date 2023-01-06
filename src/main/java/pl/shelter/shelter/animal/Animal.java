@@ -12,21 +12,26 @@ public class Animal {
     @Column(name = "id")
     private Integer id;
     private String name;
+    private String gender;
     private String typeOfAnimal;
     private Integer age;
     private Integer weight;
     private boolean status;
     private String picture;
     private String sector;
+    private String date;
 
-    public Animal(String name, String typeOfAnimal, Integer age, Integer weight, boolean status, String picture, String sector) {
+    public Animal(String name, String gender,String typeOfAnimal, Integer age, Integer weight, boolean status, String picture, String sector, String date) {
         this.name = name;
+        this.gender=gender;
         this.typeOfAnimal = typeOfAnimal;
         this.age = age;
         this.weight = weight;
         this.status = status;
         this.picture = picture;
         this.sector = sector;
+        this.date=date;
+
     }
 
     public Animal() {

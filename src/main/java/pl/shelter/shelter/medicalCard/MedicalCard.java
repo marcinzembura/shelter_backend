@@ -15,6 +15,7 @@ public class MedicalCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String doctor;
     private String nameOfDisease;
     private String date;
     private String description;
@@ -22,7 +23,8 @@ public class MedicalCard {
     @JoinColumn(name = "id_animal", referencedColumnName = "id")
     private Animal animal;
 
-    public MedicalCard(String nameOfDisease, String date, String description, Animal animal) {
+    public MedicalCard(String doctor,String nameOfDisease, String date, String description, Animal animal) {
+        this.doctor=doctor;
         this.nameOfDisease = nameOfDisease;
         this.date = date;
         this.description = description;
@@ -36,10 +38,11 @@ public class MedicalCard {
     public String toString() {
         return "MedicalCard{" +
                 "id=" + id +
+                ", doctor='" + doctor + '\'' +
                 ", nameOfDisease='" + nameOfDisease + '\'' +
-                ", date=" + date +
+                ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
-                ", id_animal=" + animal.getId() +
+                ", animal=" + animal +
                 '}';
     }
 }

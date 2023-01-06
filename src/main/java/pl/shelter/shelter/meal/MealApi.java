@@ -35,7 +35,7 @@ public class MealApi {
 
     @PutMapping
     public Meal updateAnimal(@RequestBody Meal meal) {
-        return mealService.saveMeal(meal);
+        return mealService.updateMeal(meal);
     }
 
     @DeleteMapping

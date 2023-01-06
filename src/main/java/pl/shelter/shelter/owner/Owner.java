@@ -45,10 +45,11 @@ public class Owner {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", phoneNumber=" + phoneNumber +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", pesel=" + pesel +
+                ", pesel='" + pesel + '\'' +
                 ", address='" + address + '\'' +
+                ", animal=" + animal +
                 '}';
     }
 }

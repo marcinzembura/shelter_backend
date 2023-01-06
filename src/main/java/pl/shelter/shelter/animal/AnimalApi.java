@@ -36,12 +36,15 @@ public class AnimalApi {
     }
 
     @GetMapping("/active")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Integer findNumberOfActiveAnimals(){return animalService.findNumberOfActiveAnimals();}
 
     @GetMapping("/adopted")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Integer findNumberOfAdoptedAnimals(){return animalService.findNumberOfAdoptedAnimals();}
 
     @GetMapping("/type")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Integer findNumberOfTypeAnimals(){return animalService.findNumberOfTypeAnimals();}
 
     @GetMapping
@@ -50,17 +53,21 @@ public class AnimalApi {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Animal addAnimal(@RequestBody Animal animal) {
+        System.out.println(animal);
         return animalService.saveAnimal(animal);
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Animal updateAnimal(@RequestBody Animal animal) {
         return animalService.saveAnimal(animal);
     }
 
-    @DeleteMapping
-    public void deleteAnimal(@RequestParam Integer id) {
+    @DeleteMapping(value="/{id}")
+   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
+    public void deleteAnimal(@PathVariable Integer id) {
         animalService.deleteAnimalById(id);
     }
 }

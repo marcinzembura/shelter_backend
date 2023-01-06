@@ -5,8 +5,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.animal.AnimalRepository;
+import pl.shelter.shelter.medicalCard.MedicalCard;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MealService {
@@ -33,6 +35,31 @@ public class MealService {
     public void deleteMealById(Integer id){
         mealRepository.deleteById(id);
     }
+
+    public Optional<Meal> findMealById(Integer id) {
+        return mealRepository.findById(id);
+    }
+
+
+    public Meal updateMeal(Meal newMeal) {
+
+        System.out.println(newMeal);
+        try {
+            Optional<Object> updatedMeal = findMealById(newMeal.getId())
+                    .map(meal -> {
+                        meal.setDate(newMeal.getDate());
+                        meal.setName(newMeal.getName());
+                        meal.setDescription(newMeal.getDescription());
+                        meal.setAnimal(animalRepository.findAnimalById(newMeal.getAnimal().getId()));
+                        return mealRepository.save(meal);
+                    });
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return newMeal;
+    }
+
+
 
 
     @EventListener(ApplicationReadyEvent.class)

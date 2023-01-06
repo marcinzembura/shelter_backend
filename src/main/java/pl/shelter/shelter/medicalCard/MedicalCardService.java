@@ -6,8 +6,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.animal.AnimalRepository;
+import pl.shelter.shelter.owner.Owner;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MedicalCardService {
@@ -19,8 +21,8 @@ public class MedicalCardService {
         this.animalRepository=animalRepository;
     }
 
-    public List<MedicalCard> findMedicalCardById(Integer id) {
-        return medicalCardRepository.findMedicalCardById(id);
+    public Optional<MedicalCard> findMedicalCardById(Integer id) {
+        return medicalCardRepository.findById(id);
     }
     public Iterable<MedicalCard> findAllMedicalCards() {
         return medicalCardRepository.findAll();
@@ -33,6 +35,27 @@ public class MedicalCardService {
     public void deleteMedicalCardById(Integer id) {
         medicalCardRepository.deleteById(id);
     }
+
+    public MedicalCard updateMedicalCard(MedicalCard newMedicalCard) {
+
+        System.out.println(newMedicalCard);
+        try {
+            Optional<Object> updatedMedicalCard = findMedicalCardById(newMedicalCard.getId())
+                    .map(medicalCard -> {
+                        medicalCard.setDoctor(newMedicalCard.getDoctor());
+                        medicalCard.setDate(newMedicalCard.getDate());
+                        medicalCard.setNameOfDisease(newMedicalCard.getNameOfDisease());
+                        medicalCard.setDescription(newMedicalCard.getDescription());
+                        medicalCard.setAnimal(animalRepository.findAnimalById(newMedicalCard.getAnimal().getId()));
+                        return medicalCardRepository.save(medicalCard);
+                    });
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return newMedicalCard;
+    }
+
+
 
     @EventListener(ApplicationReadyEvent.class)
     public void saveRecord() {
