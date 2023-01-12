@@ -28,16 +28,19 @@ public class MedicalCardApi {
     }
 
     @GetMapping("/{id}")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Optional<MedicalCard> getById(@RequestParam Integer id) {
         return medicalCardService.findMedicalCardById(id);
     }
 
     @PostMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public MedicalCard addMedicalCard(@RequestBody MedicalCard medicalCard) {
         return medicalCardService.saveMedicalCard(medicalCard);
     }
 
     @PutMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public MedicalCard updateAnimal(@RequestBody  MedicalCard medicalCard) {
         return medicalCardService.updateMedicalCard(medicalCard);
     }
@@ -49,6 +52,7 @@ public class MedicalCardApi {
 
     @DeleteMapping(value="/{id}")
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
+
     public void deleteMedicalCardById(@PathVariable Integer id) {
         medicalCardService.deleteMedicalCardById(id);
     }

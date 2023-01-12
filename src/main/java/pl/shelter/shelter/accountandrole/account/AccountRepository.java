@@ -15,10 +15,11 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
 
-//    @Query(value = "SELECT u " +
-//            "FROM User u " +
-//            "WHERE u.role =:user")
-//    ArrayList<Account> findEmployeesAcounts();
+
+//    @Query(value = "SELECT a " +
+//            "FROM Account a " +
+//            "WHERE a.roles ='ROLE_EMPLOYEE'")
+//    ArrayList<Account> findEmployeesAccounts();
 
 }
 

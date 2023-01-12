@@ -29,7 +29,7 @@ public class AnimalService {
     }
 
     public Iterable<Animal> findLastAnimals() {
-        return animalRepository.getLastFiveActiveAnimals();
+        return animalRepository.getLastSixActiveAnimals();
     }
 
     public Integer findNumberOfActiveAnimals(){return animalRepository.getNumberOfActiveAnimals();}
@@ -37,6 +37,18 @@ public class AnimalService {
     public Integer findNumberOfAdoptedAnimals(){return animalRepository.getNumberOfAdoptedAnimals();}
 
     public Integer findNumberOfTypeAnimals(){return animalRepository.getNumberOfTypeAnimals();}
+
+    public Integer findNumberOfCats(){return animalRepository.getNumberOfCats();}
+
+    public Integer findNumberOfDogs(){return animalRepository.getNumberOfDogs();}
+
+    public Integer findNumberOfOtherType(){return animalRepository.getNumberOfOther();}
+    public Integer findNumberOfMales(){return animalRepository.getNumberOfMales();}
+
+    public Integer findNumberOfFemales(){return animalRepository.getNumberOfFemales();}
+
+    public Integer findNumberOfOlderAnimals(){return animalRepository.getNumberOfOlderAnimals();}
+
 
     public Animal saveAnimal(Animal animal) {
         return animalRepository.save(animal);
@@ -55,6 +67,10 @@ public class AnimalService {
         animalRepository.save(new Animal("Paco", "Dog", 4, 15, true, "1", "1"));
         animalRepository.save(new Animal("Hektor", "Dog", 17, 30, true, "1", "1"));
         animalRepository.save(new Animal("Misiek", "Dog", 13, 16, true, "1", "1"));*/
+
+        System.out.println("females"+animalRepository.getNumberOfFemales());
+        System.out.println("males"+animalRepository.getNumberOfMales());
+        System.out.println("older"+animalRepository.getNumberOfOlderAnimals());
     }
 
 
