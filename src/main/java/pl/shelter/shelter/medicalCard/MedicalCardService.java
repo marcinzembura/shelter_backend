@@ -57,8 +57,19 @@ public class MedicalCardService {
 
 
 
+    public void deleteMedicalCardByAnimalId(Integer id){
+        List<Integer>tmp=medicalCardRepository.getIdMedicalCardByAnimalId(id);
+        for(int i=0;i<tmp.size();i++){
+                System.out.println("wartosci medical:"+tmp.get(i));
+                deleteMedicalCardById(tmp.get(i));
+            }
+    }
+
     @EventListener(ApplicationReadyEvent.class)
     public void saveRecord() {
+
+//        deleteMealByAnimalId(32);
+//        System.out.println(medicalCardRepository.getIdMedicalCardByAnimalId(32));
 //        MedicalCard medicalCard1 = new MedicalCard("cancer", "13.10.2022", "bla bla bla bla this is cancer",animalRepository.findAnimalByName("Puma").get(0));
 //        medicalCardRepository.save(medicalCard1);
 //        Iterable<MedicalCard> medicalCards = medicalCardRepository.findMedicalCardByAnimal_Name("Puma");

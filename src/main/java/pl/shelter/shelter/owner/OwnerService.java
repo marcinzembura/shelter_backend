@@ -6,6 +6,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.animal.AnimalRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,6 +50,15 @@ public class OwnerService {
             System.out.println(e);
         }
         return newOwner;
+    }
+
+
+    public void deleteOwnerByAnimalId(Integer id){
+        List<Integer> tmp=ownerRepository.getIdOwnerByAnimalId(id);
+        for(int i=0;i<tmp.size();i++){
+            System.out.println("wartosci medical:"+tmp.get(i));
+            deleteOwnerById(tmp.get(i));
+        }
     }
 
     public void deleteOwnerById(Integer id) {

@@ -37,6 +37,7 @@ public class AccountApi {
 //    }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Optional<Account> getAccountById(@RequestParam Integer id) {
         return accountService.findAccountById(id);
     }

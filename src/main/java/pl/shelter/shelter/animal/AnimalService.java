@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import pl.shelter.shelter.meal.MealRepository;
+import pl.shelter.shelter.medicalCard.MedicalCardRepository;
+import pl.shelter.shelter.owner.OwnerRepository;
 
 import java.util.List;
 
@@ -55,6 +58,8 @@ public class AnimalService {
     }
 
     public void deleteAnimalById(Integer id) {
+
+
         animalRepository.deleteById(id);
     }
 

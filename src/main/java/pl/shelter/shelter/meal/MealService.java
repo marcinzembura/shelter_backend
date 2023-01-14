@@ -32,13 +32,24 @@ public class MealService {
     public Meal saveMeal(Meal meal){
         return mealRepository.save(meal);
     }
-    public void deleteMealById(Integer id){
-        mealRepository.deleteById(id);
+    public void deleteMealById(Integer id){mealRepository.deleteById(id);}
+    public void deleteMealByAnimalId(Integer id){
+
+        List<Integer>tmp=mealRepository.getMealIdByAnimalId(id);
+        for(int i=0;i<tmp.size();i++){
+            System.out.println("wartosci medical:"+tmp.get(i));
+            deleteMealById(tmp.get(i));
+        }
+
+
     }
 
     public Optional<Meal> findMealById(Integer id) {
         return mealRepository.findById(id);
     }
+
+
+
 
 
     public Meal updateMeal(Meal newMeal) {
@@ -64,6 +75,8 @@ public class MealService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void saveRecord() {
+
+//        deleteMealByAnimalId()
 //        Meal meal1 = new Meal("lamb", 300, "13.10.2022",animalRepository.findAnimalByName("Puma").get(0));
 //        mealRepository.save(meal1);
 //        Iterable<Meal> meals = mealRepository.findMealsByAnimal_Name("Puma");
