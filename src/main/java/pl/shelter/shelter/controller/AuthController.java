@@ -57,7 +57,6 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-   //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -91,7 +90,6 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        // Create new user's account
        Account user = new Account(
                signUpRequest.getUsername(),
                encoder.encode(signUpRequest.getPassword()),

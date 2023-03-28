@@ -5,7 +5,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.animal.AnimalRepository;
-import pl.shelter.shelter.medicalCard.MedicalCard;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,10 +46,6 @@ public class MealService {
     public Optional<Meal> findMealById(Integer id) {
         return mealRepository.findById(id);
     }
-
-
-
-
 
     public Meal updateMeal(Meal newMeal) {
 

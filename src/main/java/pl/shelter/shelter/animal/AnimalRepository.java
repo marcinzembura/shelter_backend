@@ -28,7 +28,6 @@ public interface AnimalRepository extends CrudRepository<Animal, Integer> {
     ArrayList<Animal> getActiveAnimals();
 
 
-
     @Query(nativeQuery = true, value = "SELECT COUNT(a.id) FROM animal a WHERE a.status=1")
     Integer getNumberOfActiveAnimals();
 

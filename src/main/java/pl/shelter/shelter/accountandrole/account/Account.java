@@ -49,7 +49,6 @@ public class Account {
         this.surname = surname;
         this.phone_number = phone_number;
         this.email = email;
-        //this.role = role;
     }
 
     public Account() {

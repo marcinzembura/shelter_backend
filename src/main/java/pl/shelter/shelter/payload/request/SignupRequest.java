@@ -1,5 +1,6 @@
 package pl.shelter.shelter.payload.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+
 public class SignupRequest {
 
     @NotBlank
@@ -33,5 +35,14 @@ public class SignupRequest {
     private String surname;
     private Long phone_number;
 
+
+    public SignupRequest(String login, String password, String name, String surname, Long phone_number, String email) {
+        this.username = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phone_number = phone_number;
+        this.email = email;
+    }
 
 }
