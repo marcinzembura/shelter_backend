@@ -22,9 +22,7 @@ public class AnimalApi {
     @Autowired
     private MedicalCardService medicalCardService;
     @Autowired
-   private OwnerService ownerService;
-
-
+    private OwnerService ownerService;
 
     @Autowired
     public AnimalApi(AnimalService animalService) {
@@ -48,43 +46,57 @@ public class AnimalApi {
 
     @GetMapping("/active")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfActiveAnimals(){return animalService.findNumberOfActiveAnimals();}
+    public Integer findNumberOfActiveAnimals() {
+        return animalService.findNumberOfActiveAnimals();
+    }
 
     @GetMapping("/adopted")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfAdoptedAnimals(){return animalService.findNumberOfAdoptedAnimals();}
+    public Integer findNumberOfAdoptedAnimals() {
+        return animalService.findNumberOfAdoptedAnimals();
+    }
 
     @GetMapping("/type")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfTypeAnimals(){return animalService.findNumberOfTypeAnimals();}
+    public Integer findNumberOfTypeAnimals() {
+        return animalService.findNumberOfTypeAnimals();
+    }
 
     @GetMapping("/cats")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfCats(){return animalService.findNumberOfCats();}
+    public Integer findNumberOfCats() {
+        return animalService.findNumberOfCats();
+    }
 
     @GetMapping("/males")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfMales(){
+    public Integer findNumberOfMales() {
         return animalService.findNumberOfMales();
     }
 
     @GetMapping("/females")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfFemales(){
+    public Integer findNumberOfFemales() {
         return animalService.findNumberOfFemales();
     }
+
     @GetMapping("/older")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfOlderAnimals(){
+    public Integer findNumberOfOlderAnimals() {
         return animalService.findNumberOfOlderAnimals();
     }
+
     @GetMapping("/dogs")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfDogs(){return animalService.findNumberOfDogs();}
+    public Integer findNumberOfDogs() {
+        return animalService.findNumberOfDogs();
+    }
 
     @GetMapping("/other")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Integer findNumberOfOtherType(){return animalService.findNumberOfOtherType();}
+    public Integer findNumberOfOtherType() {
+        return animalService.findNumberOfOtherType();
+    }
 
     @GetMapping
     public Animal getById(@RequestParam Integer id) {
@@ -103,16 +115,15 @@ public class AnimalApi {
         return animalService.saveAnimal(animal);
     }
 
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public void deleteAnimal(@PathVariable Integer id) {
-        try{
-            System.out.println(mealService);
+        try {
             mealService.deleteMealByAnimalId(id);
             medicalCardService.deleteMedicalCardByAnimalId(id);
             ownerService.deleteOwnerByAnimalId(id);
             animalService.deleteAnimalById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

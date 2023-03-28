@@ -2,10 +2,15 @@ package pl.shelter.shelter.accountandrole.account;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.accountandrole.account.Account;
 import pl.shelter.shelter.accountandrole.account.AccountRepository;
+import pl.shelter.shelter.exception.AccountNotFoundException;
+import pl.shelter.shelter.exception.InvalidDataException;
+import pl.shelter.shelter.exception.RepositoryException;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 @Service
@@ -17,26 +22,56 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-     public Iterable<Account> findAllAccounts() {
+    public Iterable<Account> findAllAccounts() {
         return accountRepository.findAll();
     }
 
-//    public Iterable<Account> findAllEmployeesAccounts() {
-//        return accountRepository.findAll();
-//    }
-    public Optional<Account> findAccountById(Integer id) {
-        return accountRepository.findById(id);
+    public Account findAccountById(Integer id) {
+        return accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
     }
 
+
+    // !TODO
     public Account updateAccount(Account account) {
-        return accountRepository.save(account);
+        if (validateAccount(account)) {
+            try {
+                return accountRepository.save(account);
+            } catch (Exception e) {
+                throw new RuntimeException("Cannot update account");
+            }
+        }
+        return null;
     }
 
     public void deleteAccountById(Integer id) {
-        accountRepository.deleteById(id);
+        try {
+            accountRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException exc) {
+            throw new AccountNotFoundException(id);
+        }
     }
 
-    public Account saveAccount(Account account ) {
-        return accountRepository.save(account);
+    private boolean validateAccount(Account account) {
+        if (Long.toString(account.getPhone_number()).length() != 9) {
+            throw new InvalidDataException("Incorrect phone number");
+        } else if (account.getUsername().length() < 3 || account.getUsername().length() > 20) {
+            throw new InvalidDataException("Incorrect username");
+        }else if(account.getPassword().length() < 6 || account.getUsername().length() > 40){
+            throw new InvalidDataException("Incorrect password");
+        }
+        return true;
+    }
+
+
+    //!TODO
+    public Account saveAccount(Account account) {
+        if (validateAccount(account)) {
+            try {
+                return accountRepository.save(account);
+            } catch (Exception e) {
+                throw new RuntimeException("Cannot save account");
+            }
+        }
+        return null;
     }
 }

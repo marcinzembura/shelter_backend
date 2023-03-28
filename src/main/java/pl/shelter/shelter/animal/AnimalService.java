@@ -19,32 +19,23 @@ public class AnimalService {
     public Iterable<Animal> findAllAnimals() {
         return animalRepository.findAll();
     }
-
     public Iterable<Animal> findActiveAnimals() {
         return animalRepository.getActiveAnimals();
     }
-
     public Iterable<Animal> findLastAnimals() {
         return animalRepository.getLastSixActiveAnimals();
     }
-
     public Integer findNumberOfActiveAnimals(){return animalRepository.getNumberOfActiveAnimals();}
-
     public Integer findNumberOfAdoptedAnimals(){return animalRepository.getNumberOfAdoptedAnimals();}
-
     public Integer findNumberOfTypeAnimals(){return animalRepository.getNumberOfTypeAnimals();}
-
     public Integer findNumberOfCats(){return animalRepository.getNumberOfCats();}
-
     public Integer findNumberOfDogs(){return animalRepository.getNumberOfDogs();}
-
     public Integer findNumberOfOtherType(){return animalRepository.getNumberOfOther();}
     public Integer findNumberOfMales(){return animalRepository.getNumberOfMales();}
 
     public Integer findNumberOfFemales(){return animalRepository.getNumberOfFemales();}
 
     public Integer findNumberOfOlderAnimals(){return animalRepository.getNumberOfOlderAnimals();}
-
 
     public Animal saveAnimal(Animal animal) {
         return animalRepository.save(animal);

@@ -25,12 +25,6 @@ public class MealApi {
         return mealService.findAllMeals();
     }
 
-//    @GetMapping
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-//    public List<Meal> getMealByAnimalId(@RequestParam Integer id) {
-//        return mealService.findMealByAnimalId(id);
-//    }
-
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Meal addMeal(@RequestBody Meal meal) {

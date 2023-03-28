@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface OwnerRepository extends CrudRepository<Owner,Integer> {
 
-
     @Query(nativeQuery = true, value = "SELECT a.id FROM owner a WHERE a.id_animal=:idAnimal")
     List<Integer> getIdOwnerByAnimalId(Integer idAnimal);
-
 
 }
