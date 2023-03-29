@@ -5,13 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/owner")
 @CrossOrigin
 public class OwnerApi {
-
 
     private OwnerService ownerService;
 
@@ -21,7 +18,6 @@ public class OwnerApi {
     }
 
     @GetMapping("/all")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public Iterable<Owner> getAll() {
         return ownerService.findAllOwners();
@@ -29,10 +25,9 @@ public class OwnerApi {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Optional<Owner> getById(@RequestParam Integer id) {
+    public Owner getById(@RequestParam Integer id) {
         return ownerService.findOwnersById(id);
     }
-
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")

@@ -28,7 +28,7 @@ public class MedicalCardApi {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public Optional<MedicalCard> getById(@RequestParam Integer id) {
+    public MedicalCard getById(@RequestParam Integer id) {
         return medicalCardService.findMedicalCardById(id);
     }
 

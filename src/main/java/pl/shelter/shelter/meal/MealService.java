@@ -3,10 +3,14 @@ package pl.shelter.shelter.meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.animal.AnimalRepository;
+import pl.shelter.shelter.exception.ApiRequestException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -15,66 +19,70 @@ public class MealService {
     private MealRepository mealRepository;
     private AnimalRepository animalRepository;
 
-    public MealService(@Autowired MealRepository mealRepository, @Autowired AnimalRepository animalRepository)
-    {
+    public MealService(@Autowired MealRepository mealRepository, @Autowired AnimalRepository animalRepository) {
         this.mealRepository = mealRepository;
-        this.animalRepository=animalRepository;
+        this.animalRepository = animalRepository;
     }
 
     public List<Meal> findMealByAnimalId(Integer id) {
-        return mealRepository.findMealsByAnimal_Id(id);
+        try {
+            return mealRepository.findMealsByAnimal_Id(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ApiRequestException("Cannot find meal for this ANIMAL_ID");
+        }
     }
+
     public Iterable<Meal> findAllMeals() {
         return mealRepository.findAll();
     }
 
-    public Meal saveMeal(Meal meal){
-        return mealRepository.save(meal);
-    }
-    public void deleteMealById(Integer id){mealRepository.deleteById(id);}
-    public void deleteMealByAnimalId(Integer id){
-
-        List<Integer>tmp=mealRepository.getMealIdByAnimalId(id);
-        for(int i=0;i<tmp.size();i++){
-            System.out.println("wartosci medical:"+tmp.get(i));
-            deleteMealById(tmp.get(i));
+    public Meal saveMeal(Meal meal) {
+        try {
+            return mealRepository.save(meal);
+        } catch (DataAccessException e) {
+            throw new ApiRequestException("Cannot save meal!");
         }
-
-
     }
 
-    public Optional<Meal> findMealById(Integer id) {
-        return mealRepository.findById(id);
+    public void deleteMealById(Integer id) {
+        try {
+            mealRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            // wyjątek jest rzucany, gdy nie ma encji o podanym id w bazie danych
+            throw new ApiRequestException("Cannot find meal for this ID");
+        }
+    }
+
+    public void deleteMealByAnimalId(Integer id) {
+        List<Integer> tmp = mealRepository.getMealIdByAnimalId(id);
+        for (int i = 0; i < tmp.size(); i++) {
+            try {
+                deleteMealById(tmp.get(i));
+            } catch (DataAccessException | NoSuchElementException e) {
+                throw new ApiRequestException("Cannot delete meals for this ID");
+            }
+        }
+    }
+
+    public Meal findMealById(Integer id) {
+        return mealRepository.findById(id).orElseThrow(() -> new ApiRequestException("Cannot find meal for this ID"));
     }
 
     public Meal updateMeal(Meal newMeal) {
 
-        System.out.println(newMeal);
         try {
-            Optional<Object> updatedMeal = findMealById(newMeal.getId())
-                    .map(meal -> {
-                        meal.setDate(newMeal.getDate());
-                        meal.setName(newMeal.getName());
-                        meal.setDescription(newMeal.getDescription());
-                        meal.setAnimal(animalRepository.findAnimalById(newMeal.getAnimal().getId()));
-                        return mealRepository.save(meal);
-                    });
-        }catch (Exception e){
-            System.out.println(e);
+            Meal mealToUpdate = findMealById(newMeal.getId());
+            if (mealToUpdate != null) {
+                mealToUpdate.setDate(newMeal.getDate());
+                mealToUpdate.setName(newMeal.getName());
+                mealToUpdate.setDescription(newMeal.getDescription());
+                mealToUpdate.setAnimal(animalRepository.findAnimalById(newMeal.getAnimal().getId()));
+                mealRepository.save(mealToUpdate);
+            }
+        } catch (Exception e) {
+            throw new ApiRequestException("Cannot update meal");
         }
         return newMeal;
     }
 
-
-
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void saveRecord() {
-
-//        deleteMealByAnimalId()
-//        Meal meal1 = new Meal("lamb", 300, "13.10.2022",animalRepository.findAnimalByName("Puma").get(0));
-//        mealRepository.save(meal1);
-//        Iterable<Meal> meals = mealRepository.findMealsByAnimal_Name("Puma");
-//        meals.forEach(System.out::println);
-    }
 }

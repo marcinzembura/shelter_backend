@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.shelter.shelter.accountandrole.account.Account;
 import pl.shelter.shelter.accountandrole.account.AccountRepository;
 import pl.shelter.shelter.exception.AccountNotFoundException;
+import pl.shelter.shelter.exception.ApiRequestException;
 import pl.shelter.shelter.exception.InvalidDataException;
 import pl.shelter.shelter.exception.RepositoryException;
 
@@ -31,13 +32,12 @@ public class AccountService {
     }
 
 
-    // !TODO
     public Account updateAccount(Account account) {
         if (validateAccount(account)) {
             try {
                 return accountRepository.save(account);
             } catch (Exception e) {
-                throw new RuntimeException("Cannot update account");
+                throw new ApiRequestException("Cannot save account");
             }
         }
         return null;
@@ -63,13 +63,12 @@ public class AccountService {
     }
 
 
-    //!TODO
     public Account saveAccount(Account account) {
         if (validateAccount(account)) {
             try {
                 return accountRepository.save(account);
             } catch (Exception e) {
-                throw new RuntimeException("Cannot save account");
+                throw new ApiRequestException("Cannot save account");
             }
         }
         return null;
