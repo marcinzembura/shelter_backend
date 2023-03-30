@@ -48,7 +48,6 @@ public class MealService {
         try {
             mealRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            // wyjątek jest rzucany, gdy nie ma encji o podanym id w bazie danych
             throw new ApiRequestException("Cannot find meal for this ID");
         }
     }

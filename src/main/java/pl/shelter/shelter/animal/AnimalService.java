@@ -1,9 +1,12 @@
 package pl.shelter.shelter.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.shelter.shelter.exception.ApiException;
 import pl.shelter.shelter.exception.ApiRequestException;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class AnimalService {
@@ -15,7 +18,8 @@ public class AnimalService {
     }
 
     public Animal findAnimalById(Integer id) {
-        return animalRepository.findAnimalById(id);
+        return animalRepository.findById(id).orElseThrow(
+                () -> new ApiRequestException("Cannot find animal for this ID"));
     }
 
     public Iterable<Animal> findAllAnimals() {
@@ -50,9 +54,7 @@ public class AnimalService {
         return animalRepository.getNumberOfDogs();
     }
 
-    public Integer findNumberOfOtherType() {
-        return animalRepository.getNumberOfOther();
-    }
+    public Integer findNumberOfOtherType() {return animalRepository.getNumberOfOther();}
 
     public Integer findNumberOfMales() {
         return animalRepository.getNumberOfMales();
@@ -67,15 +69,19 @@ public class AnimalService {
     }
 
     public Animal saveAnimal(Animal animal) {
-        return animalRepository.save(animal);
+        try {
+            return animalRepository.save(animal);
+        } catch (DataAccessException e) {
+            throw new ApiRequestException("Cannot save animal!");
+        }
     }
 
     public void deleteAnimalById(Integer id) throws Exception {
         if (animalRepository.existsById(id)) {
             try {
                 animalRepository.deleteById(id);
-            } catch (Exception e) {
-                throw new Exception("Cannot delete animal by id", e);
+            } catch (DataAccessException | NoSuchElementException e) {
+                throw new ApiRequestException("Cannot delete animal for this ID");
             }
         }
     }
